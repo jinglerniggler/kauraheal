@@ -1,0 +1,607 @@
+-- Combined NaN Teleporter + Auto Laser GUI
+-- Can be converted to loadstring
+
+local function loadCombinedScript()
+    --print("🚀 Loading Combined GUI Script...")
+    
+    -- NaN Teleporter GUI
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "CombinedToolsGUI"
+    ScreenGui.ResetOnSpawn = false
+
+    -- NaN Teleporter Frame
+    local teleporterFrame = Instance.new("Frame")
+    teleporterFrame.Name = "TeleporterFrame"
+    teleporterFrame.Size = UDim2.new(0, 200, 0, 140)
+    teleporterFrame.Position = UDim2.new(0, 10, 0, 10)
+    teleporterFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    teleporterFrame.BorderSizePixel = 0
+    teleporterFrame.Active = true
+    teleporterFrame.Draggable = true
+    teleporterFrame.Parent = ScreenGui
+
+    local uiCorner = Instance.new("UICorner")
+    uiCorner.CornerRadius = UDim.new(0, 8)
+    uiCorner.Parent = teleporterFrame
+
+    local titleBar = Instance.new("Frame")
+    titleBar.Name = "TitleBar"
+    titleBar.Size = UDim2.new(1, 0, 0, 30)
+    titleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+    titleBar.BorderSizePixel = 0
+    titleBar.Parent = teleporterFrame
+
+    local titleCorner = Instance.new("UICorner")
+    titleCorner.CornerRadius = UDim.new(0, 8)
+    titleCorner.Parent = titleBar
+
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Name = "TitleLabel"
+    titleLabel.Size = UDim2.new(1, -10, 1, 0)
+    titleLabel.Position = UDim2.new(0, 10, 0, 0)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Text = "NaN Teleporter"
+    titleLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+    titleLabel.Font = Enum.Font.GothamBold
+    titleLabel.TextSize = 14
+    titleLabel.Parent = titleBar
+
+    local closeButton = Instance.new("TextButton")
+    closeButton.Name = "CloseButton"
+    closeButton.Size = UDim2.new(0, 30, 0, 30)
+    closeButton.Position = UDim2.new(1, -30, 0, 0)
+    closeButton.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    closeButton.BorderSizePixel = 0
+    closeButton.Text = "✕"
+    closeButton.TextColor3 = Color3.fromRGB(255, 100, 100)
+    closeButton.Font = Enum.Font.GothamBold
+    closeButton.TextSize = 14
+    closeButton.Parent = titleBar
+
+    local closeCorner = Instance.new("UICorner")
+    closeCorner.CornerRadius = UDim.new(0, 8)
+    closeCorner.Parent = closeButton
+
+    local repositionButton = Instance.new("TextButton")
+    repositionButton.Name = "RepositionButton"
+    repositionButton.Size = UDim2.new(0.8, 0, 0, 40)
+    repositionButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+    repositionButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    repositionButton.BorderSizePixel = 0
+    repositionButton.Text = "TELEPORT TO NaN"
+    repositionButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    repositionButton.Font = Enum.Font.GothamBold
+    repositionButton.TextSize = 13
+    repositionButton.Parent = teleporterFrame
+
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.CornerRadius = UDim.new(0, 6)
+    buttonCorner.Parent = repositionButton
+
+    local teleportInfoLabel = Instance.new("TextLabel")
+    teleportInfoLabel.Name = "InfoLabel"
+    teleportInfoLabel.Size = UDim2.new(0.9, 0, 0, 40)
+    teleportInfoLabel.Position = UDim2.new(0.05, 0, 0.7, 0)
+    teleportInfoLabel.BackgroundTransparency = 1
+    teleportInfoLabel.Text = "Click to teleport to NaN"
+    teleportInfoLabel.TextColor3 = Color3.fromRGB(255, 150, 150)
+    teleportInfoLabel.Font = Enum.Font.Gotham
+    teleportInfoLabel.TextSize = 11
+    teleportInfoLabel.TextWrapped = true
+    teleportInfoLabel.Parent = teleporterFrame
+
+    local counterLabel = Instance.new("TextLabel")
+    counterLabel.Name = "CounterLabel"
+    counterLabel.Size = UDim2.new(0.9, 0, 0, 20)
+    counterLabel.Position = UDim2.new(0.05, 0, 0.95, 0)
+    counterLabel.BackgroundTransparency = 1
+    counterLabel.Text = "Teleports: 0"
+    counterLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    counterLabel.Font = Enum.Font.Gotham
+    counterLabel.TextSize = 10
+    counterLabel.Parent = teleporterFrame
+
+    local resetButton = Instance.new("TextButton")
+    resetButton.Name = "ResetCounterButton"
+    resetButton.Size = UDim2.new(0, 20, 0, 20)
+    resetButton.Position = UDim2.new(0.9, 0, 0.95, 0)
+    resetButton.BackgroundColor3 = Color3.fromRGB(60, 60, 65)
+    resetButton.BorderSizePixel = 0
+    resetButton.Text = "↻"
+    resetButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+    resetButton.Font = Enum.Font.Gotham
+    resetButton.TextSize = 12
+    resetButton.Parent = teleporterFrame
+
+    local uiStroke = Instance.new("UIStroke")
+    uiStroke.Color = Color3.fromRGB(80, 0, 0)
+    uiStroke.Thickness = 2
+    uiStroke.Parent = teleporterFrame
+
+    -- Auto Laser Frame
+    local laserFrame = Instance.new("Frame")
+    laserFrame.Name = "LaserFrame"
+    laserFrame.Size = UDim2.new(0, 320, 0, 250)
+    laserFrame.Position = UDim2.new(1, -340, 0, 10)
+    laserFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    laserFrame.BorderSizePixel = 0
+    laserFrame.Active = true
+    laserFrame.Draggable = true
+    laserFrame.Parent = ScreenGui
+
+    local laserCorner = Instance.new("UICorner")
+    laserCorner.CornerRadius = UDim.new(0, 8)
+    laserCorner.Parent = laserFrame
+
+    local laserTitle = Instance.new("TextLabel")
+    laserTitle.Size = UDim2.new(1, 0, 0, 40)
+    laserTitle.Position = UDim2.new(0, 0, 0, 0)
+    laserTitle.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    laserTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    laserTitle.Text = "auto laser"
+    laserTitle.Font = Enum.Font.GothamBold
+    laserTitle.TextSize = 16
+    laserTitle.Parent = laserFrame
+
+    local laserTitleCorner = Instance.new("UICorner")
+    laserTitleCorner.CornerRadius = UDim.new(0, 8)
+    laserTitleCorner.Parent = laserTitle
+
+    local statusLabel = Instance.new("TextLabel")
+    statusLabel.Size = UDim2.new(1, -20, 0, 25)
+    statusLabel.Position = UDim2.new(0, 10, 0, 50)
+    statusLabel.BackgroundTransparency = 1
+    statusLabel.TextColor3 = Color3.fromRGB(255, 50, 50)
+    statusLabel.Text = "Status: OFF"
+    statusLabel.Font = Enum.Font.Gotham
+    statusLabel.TextSize = 14
+    statusLabel.TextXAlignment = Enum.TextXAlignment.Left
+    statusLabel.Parent = laserFrame
+
+    local modeLabel = Instance.new("TextLabel")
+    modeLabel.Size = UDim2.new(1, -20, 0, 20)
+    modeLabel.Position = UDim2.new(0, 10, 0, 75)
+    modeLabel.BackgroundTransparency = 1
+    modeLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    modeLabel.Text = "Mode: Any Player"
+    modeLabel.Font = Enum.Font.Gotham
+    modeLabel.TextSize = 12
+    modeLabel.TextXAlignment = Enum.TextXAlignment.Left
+    modeLabel.Parent = laserFrame
+
+    local targetLabel = Instance.new("TextLabel")
+    targetLabel.Size = UDim2.new(1, -20, 0, 30)
+    targetLabel.Position = UDim2.new(0, 10, 0, 95)
+    targetLabel.BackgroundTransparency = 1
+    targetLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    targetLabel.Text = "Target: None"
+    targetLabel.Font = Enum.Font.Gotham
+    targetLabel.TextSize = 12
+    targetLabel.TextXAlignment = Enum.TextXAlignment.Left
+    targetLabel.Parent = laserFrame
+
+    local animationLabel = Instance.new("TextLabel")
+    animationLabel.Size = UDim2.new(1, -20, 0, 20)
+    animationLabel.Position = UDim2.new(0, 10, 0, 125)
+    animationLabel.BackgroundTransparency = 1
+    animationLabel.TextColor3 = Color3.fromRGB(150, 150, 255)
+    animationLabel.Text = "steal not detected"
+    animationLabel.Font = Enum.Font.Gotham
+    animationLabel.TextSize = 11
+    animationLabel.TextXAlignment = Enum.TextXAlignment.Left
+    animationLabel.Parent = laserFrame
+
+    local toggleButton = Instance.new("TextButton")
+    toggleButton.Size = UDim2.new(1, -20, 0, 35)
+    toggleButton.Position = UDim2.new(0, 10, 0, 150)
+    toggleButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
+    toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    toggleButton.Text = "start lasering"
+    toggleButton.Font = Enum.Font.GothamBold
+    toggleButton.TextSize = 14
+    toggleButton.Parent = laserFrame
+
+    local laserButtonCorner = Instance.new("UICorner")
+    laserButtonCorner.CornerRadius = UDim.new(0, 6)
+    laserButtonCorner.Parent = toggleButton
+
+    local animToggleButton = Instance.new("TextButton")
+    animToggleButton.Size = UDim2.new(1, -20, 0, 35)
+    animToggleButton.Position = UDim2.new(0, 10, 0, 195)
+    animToggleButton.BackgroundColor3 = Color3.fromRGB(100, 60, 220)
+    animToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    animToggleButton.Text = "target griefs"
+    animToggleButton.Font = Enum.Font.GothamBold
+    animToggleButton.TextSize = 14
+    animToggleButton.Parent = laserFrame
+
+    local animButtonCorner = Instance.new("UICorner")
+    animButtonCorner.CornerRadius = UDim.new(0, 6)
+    animButtonCorner.Parent = animToggleButton
+
+    -- Parent the GUI
+    ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+    -- NaN Teleporter Variables
+    local Players = game:GetService("Players")
+    local localPlayer = Players.LocalPlayer
+    local teleportCount = 0
+    local isTeleporting = false
+
+    -- Auto Laser Variables
+    local RunService = game:GetService("RunService")
+    local UserInputService = game:GetService("UserInputService")
+    local TARGET_ANIMATION_ID = "rbxassetid://71186871415348"
+    local autoTargetEnabled = false
+    local animationOnlyMode = false
+    local connection = nil
+
+    -- NaN Teleporter Functions
+    closeButton.MouseButton1Click:Connect(function()
+        teleporterFrame.Visible = false
+    end)
+
+    repositionButton.MouseEnter:Connect(function()
+        repositionButton.BackgroundColor3 = Color3.fromRGB(230, 70, 70)
+    end)
+
+    repositionButton.MouseLeave:Connect(function()
+        repositionButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    end)
+
+    repositionButton.MouseButton1Down:Connect(function()
+        repositionButton.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+        repositionButton.Position = UDim2.new(0.1, 0, 0.31, 0)
+    end)
+
+    repositionButton.MouseButton1Up:Connect(function()
+        repositionButton.BackgroundColor3 = Color3.fromRGB(230, 70, 70)
+        repositionButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+    end)
+
+    repositionButton.MouseButton1Click:Connect(function()
+        if isTeleporting then return end
+        isTeleporting = true
+        
+        local originalText = repositionButton.Text
+        local originalColor = repositionButton.BackgroundColor3
+        
+        repositionButton.Text = "TELEPORTING..."
+        repositionButton.BackgroundColor3 = Color3.fromRGB(255, 100, 0)
+        repositionButton.AutoButtonColor = false
+        
+        local character = localPlayer.Character
+        if not character or not character.Parent then
+            teleportInfoLabel.Text = "Waiting for character..."
+            character = localPlayer.CharacterAdded:Wait()
+        end
+        
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart", 5)
+        
+        if not humanoidRootPart then
+            teleportInfoLabel.Text = "No HumanoidRootPart!\nTry again."
+            repositionButton.Text = originalText
+            repositionButton.BackgroundColor3 = originalColor
+            repositionButton.AutoButtonColor = true
+            isTeleporting = false
+            return
+        end
+        
+        local nanPosition = Vector3.new(9/9, 9/9, 9/9)
+        teleportCount = teleportCount + 1
+        counterLabel.Text = "Teleports: " .. teleportCount
+        
+        teleportInfoLabel.Text = "Teleport #" .. teleportCount .. "\nPosition: " .. tostring(nanPosition)
+        
+        local success, error = pcall(function()
+            humanoidRootPart.CFrame = CFrame.new(nanPosition)
+        end)
+        
+        task.wait(0.3)
+        
+        if success then
+            teleportInfoLabel.Text = "Teleport #" .. teleportCount .. " OK!\nAt NaN position"
+        else
+            teleportInfoLabel.Text = "Teleport #" .. teleportCount .. " failed"
+        end
+        
+        repositionButton.Text = "✓ SUCCESS!"
+        repositionButton.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
+        
+        task.wait(0.7)
+        repositionButton.Text = originalText
+        repositionButton.BackgroundColor3 = originalColor
+        repositionButton.AutoButtonColor = true
+        
+        teleportInfoLabel.Text = "Ready for next teleport!"
+        isTeleporting = false
+    end)
+
+    resetButton.MouseButton1Click:Connect(function()
+        teleportCount = 0
+        counterLabel.Text = "Teleports: 0"
+        teleportInfoLabel.Text = "Counter reset!\nReady for teleport"
+    end)
+
+    localPlayer.CharacterAdded:Connect(function()
+        if not isTeleporting then
+            teleportInfoLabel.Text = "Character respawned!\nReady for teleport"
+        end
+    end)
+
+    -- Auto Laser Functions
+    function isPlayingTargetAnimation(player)
+        if not player or not player.Character then
+            return false
+        end
+        
+        local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+        if not humanoid then
+            return false
+        end
+        
+        local animator = humanoid:FindFirstChildOfClass("Animator")
+        if not animator then
+            return false
+        end
+        
+        for _, track in pairs(animator:GetPlayingAnimationTracks()) do
+            if track.Animation then
+                local animationId = tostring(track.Animation.AnimationId)
+                if animationId == TARGET_ANIMATION_ID then
+                    return true, track
+                end
+            end
+        end
+        
+        return false
+    end
+
+    function getClosestPlayer(animationOnly)
+        local closestPlayer = nil
+        local closestDistance = math.huge
+        local animationDetected = false
+        
+        for _, player in pairs(Players:GetPlayers()) do
+            if player ~= localPlayer and player.Character then
+                local targetHRP = player.Character:FindFirstChild("HumanoidRootPart")
+                local localHRP = localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart")
+                
+                if targetHRP and localHRP then
+                    local distance = (targetHRP.Position - localHRP.Position).Magnitude
+                    
+                    if animationOnly then
+                        local isPlayingAnim = isPlayingTargetAnimation(player)
+                        if isPlayingAnim and distance < closestDistance then
+                            closestDistance = distance
+                            closestPlayer = player
+                            animationDetected = true
+                        end
+                    else
+                        if distance < closestDistance then
+                            closestDistance = distance
+                            closestPlayer = player
+                            animationDetected = isPlayingTargetAnimation(player)
+                        end
+                    end
+                end
+            end
+        end
+        
+        return closestPlayer, closestDistance, animationDetected
+    end
+
+    function fireItemAtTarget(targetPlayer)
+        if not targetPlayer or not targetPlayer.Character then
+            return false
+        end
+        
+        local targetTorso = targetPlayer.Character:FindFirstChild("UpperTorso") or targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+        if not targetTorso then
+            return false
+        end
+        
+        local args = {
+            targetTorso.Position,
+            targetTorso
+        }
+        
+        local success, error = pcall(function()
+            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("Net"):WaitForChild("RE/UseItem"):FireServer(unpack(args))
+        end)
+        
+        return success
+    end
+
+    function startAutoTarget()
+        if connection then
+            connection:Disconnect()
+        end
+        
+        connection = RunService.Heartbeat:Connect(function()
+            if not autoTargetEnabled or not localPlayer.Character then
+                return
+            end
+            
+            local closestPlayer, distance, hasAnimation = getClosestPlayer(animationOnlyMode)
+            
+            if closestPlayer then
+                if animationOnlyMode and not hasAnimation then
+                    targetLabel.Text = "Target: " .. closestPlayer.Name .. " (No Animation)"
+                    animationLabel.Text = "Animation: Waiting..."
+                    return
+                end
+                
+                targetLabel.Text = "Target: " .. closestPlayer.Name .. " (" .. math.floor(distance) .. " studs)"
+                
+                if hasAnimation then
+                    animationLabel.Text = "Animation: DETECTED!"
+                    animationLabel.TextColor3 = Color3.fromRGB(50, 255, 50)
+                else
+                    animationLabel.Text = "Animation: Not Detected"
+                    animationLabel.TextColor3 = Color3.fromRGB(150, 150, 255)
+                end
+                
+                local success = fireItemAtTarget(closestPlayer)
+                if not success then
+                    targetLabel.Text = "Target: " .. closestPlayer.Name .. " (Failed)"
+                end
+            else
+                targetLabel.Text = "Target: None found"
+                if animationOnlyMode then
+                    animationLabel.Text = "Animation: None"
+                else
+                    animationLabel.Text = "Animation: None"
+                end
+            end
+        end)
+    end
+
+    toggleButton.MouseButton1Click:Connect(function()
+        animationOnlyMode = false
+        autoTargetEnabled = not autoTargetEnabled
+        
+        if autoTargetEnabled then
+            statusLabel.Text = "Status: ON"
+            statusLabel.TextColor3 = Color3.fromRGB(50, 255, 50)
+            modeLabel.Text = "Mode: Any Player"
+            toggleButton.Text = "STOP LASERING"
+            toggleButton.BackgroundColor3 = Color3.fromRGB(50, 220, 60)
+            animToggleButton.BackgroundColor3 = Color3.fromRGB(80, 80, 120)
+            startAutoTarget()
+        else
+            statusLabel.Text = "Status: OFF"
+            statusLabel.TextColor3 = Color3.fromRGB(255, 50, 50)
+            modeLabel.Text = "Mode: Any Player"
+            toggleButton.Text = "START LASERING"
+            toggleButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
+            animToggleButton.BackgroundColor3 = Color3.fromRGB(100, 60, 220)
+            targetLabel.Text = "Target: None"
+            animationLabel.Text = "steal not detected"
+            
+            if connection then
+                connection:Disconnect()
+                connection = nil
+            end
+        end
+    end)
+
+    animToggleButton.MouseButton1Click:Connect(function()
+        animationOnlyMode = true
+        autoTargetEnabled = not autoTargetEnabled
+        
+        if autoTargetEnabled then
+            statusLabel.Text = "Status: ON"
+            statusLabel.TextColor3 = Color3.fromRGB(50, 255, 50)
+            modeLabel.Text = "Mode: Animation Only"
+            animToggleButton.Text = "STOP TARGETING"
+            animToggleButton.BackgroundColor3 = Color3.fromRGB(80, 220, 120)
+            toggleButton.BackgroundColor3 = Color3.fromRGB(80, 80, 120)
+            startAutoTarget()
+        else
+            statusLabel.Text = "Status: OFF"
+            statusLabel.TextColor3 = Color3.fromRGB(255, 50, 50)
+            modeLabel.Text = "Mode: Animation Only"
+            animToggleButton.Text = "TARGET GRIEFS"
+            animToggleButton.BackgroundColor3 = Color3.fromRGB(100, 60, 220)
+            toggleButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
+            targetLabel.Text = "Target: None"
+            animationLabel.Text = "steal not detected"
+            
+            if connection then
+                connection:Disconnect()
+                connection = nil
+            end
+        end
+    end)
+
+    -- Make both GUIs draggable
+    local teleporterDragging = false
+    local teleporterDragInput, teleporterDragStart, teleporterStartPos
+    
+    local function updateTeleporter(input)
+        local delta = input.Position - teleporterDragStart
+        teleporterFrame.Position = UDim2.new(teleporterStartPos.X.Scale, teleporterStartPos.X.Offset + delta.X, teleporterStartPos.Y.Scale, teleporterStartPos.Y.Offset + delta.Y)
+    end
+
+    titleBar.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            teleporterDragging = true
+            teleporterDragStart = input.Position
+            teleporterStartPos = teleporterFrame.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    teleporterDragging = false
+                end
+            end)
+        end
+    end)
+
+    titleBar.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            teleporterDragInput = input
+        end
+    end)
+
+    local laserDragging = false
+    local laserDragInput, laserDragStart, laserStartPos
+    
+    local function updateLaser(input)
+        local delta = input.Position - laserDragStart
+        laserFrame.Position = UDim2.new(laserStartPos.X.Scale, laserStartPos.X.Offset + delta.X, laserStartPos.Y.Scale, laserStartPos.Y.Offset + delta.Y)
+    end
+
+    laserTitle.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            laserDragging = true
+            laserDragStart = input.Position
+            laserStartPos = laserFrame.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    laserDragging = false
+                end
+            end)
+        end
+    end)
+
+    laserTitle.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            laserDragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == teleporterDragInput and teleporterDragging then
+            updateTeleporter(input)
+        end
+        if input == laserDragInput and laserDragging then
+            updateLaser(input)
+        end
+    end)
+
+    -- Hotkeys
+    local uis = game:GetService("UserInputService")
+    uis.InputBegan:Connect(function(input, gameProcessed)
+        if not gameProcessed then
+            if input.KeyCode == Enum.KeyCode.N then
+                teleporterFrame.Visible = not teleporterFrame.Visible
+            elseif input.KeyCode == Enum.KeyCode.L then
+                laserFrame.Visible = not laserFrame.Visible
+            end
+        end
+    end)
+
+    --print("✅ Combined GUI Script Loaded!")
+    --print("📊 Features:")
+    --print("   - NaN Teleporter GUI (Top-left)")
+    --print("   - Auto Laser GUI (Top-right)")
+    --print("   - Both GUIs are draggable")
+    --print("🎮 Hotkeys:")
+    --print("   - N: Toggle NaN Teleporter GUI")
+    --print("   - L: Toggle Laser GUI")
+end
+
+-- Execute the combined script
+loadCombinedScript()
